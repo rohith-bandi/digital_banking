@@ -3,13 +3,17 @@ import re
 import random
 import datetime
 import smtplib
-import click
 
 def otp():
     otp = ""
     for i in range(4):
         otp += str(random.randint(0, 9))
     return otp
+
+def validemail(email):
+    # Add your email validation logic here
+    # For simplicity, assuming any non-empty string is a valid email
+    return bool(email)
 
 def sendmail(email): 
     s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -32,35 +36,34 @@ def sendmail(email):
         print("Wrong OTP, please try again!")
         return False
 
-@click.command()
-@click.argument('username')
-def acc_form(username):
+def acc_form():
+    username = input("Enter your Username: ")
     print("Please Enter the following details")
-    first_name = click.prompt("Enter your First name", type=str)
-    last_name = click.prompt("Enter your Last name", type=str)
-    DOB = click.prompt("Enter your Date of Birth in the form (DD/MM/YYYY)", type=str)
-    gender = click.prompt("Please enter your gender (M/F)", type=str, default="M")
-    aadhar = click.prompt("Enter your Aadhar number", type=str)
-    email = click.prompt("Enter your email ID", type=str)
+    first_name = input("Enter your First name: ")
+    last_name = input("Enter your Last name: ")
+    DOB = input("Enter your Date of Birth in the form (DD/MM/YYYY): ")
+    gender = input("Please enter your gender (M/F) [default=M]: ") or "M"
+    aadhar = input("Enter your Aadhar number: ")
+    email = input("Enter your email ID: ")
     while True:
         if not validemail(email):
             print("Please enter a valid Email ID")
-            email = click.prompt("Enter your email ID", type=str)
+            email = input("Enter your email ID: ")
         else:
             print("Please enter 1 to confirm your email ID:")
-            opt = click.prompt("", type=int)
-            if opt == 1:
+            opt = input("")
+            if opt == "1":
                 break
             else:
-                email = click.prompt("Enter your email ID", type=str)
+                email = input("Enter your email ID: ")
 
     print("An OTP will be sent to your mail. Please enter the OTP to create a bank account")
     if sendmail(email):
-        balance = click.prompt("Enter the min balance for first deposit (1000-4000)", type=int)
+        balance = int(input("Enter the min balance for first deposit (1000-4000): "))
         while True:
             if balance > 4000 or balance < 1000:
                 print("Invalid balance amount! Please try again.")
-                balance = click.prompt("Enter the min balance for first deposit (1000-4000)", type=int)
+                balance = int(input("Enter the min balance for first deposit (1000-4000): "))
             else:
                 print("You have a minimum balance of:", balance)
                 break
