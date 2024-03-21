@@ -1,6 +1,5 @@
 import json
 import datetime
-import click
 
 def deposit(acc_no, amount):
     try:
@@ -96,7 +95,6 @@ def bankbalance():
     except Exception as e:
         print(f"Error: {str(e)}")
 
-@click.command()
 def main():
     while True:
         print("\nEnter an option")
@@ -106,18 +104,18 @@ def main():
         print("4. View bank balance")
         print("5. View the feedback of users")
         print("6. Exit")
-        opt = click.prompt("Enter an option", type=int)
+        opt = int(input("Enter an option: "))
 
         if opt == 1:
-            username = click.prompt("Enter the account name")
-            amount = click.prompt("Enter amount to be deposited", type=int)
+            username = input("Enter the account name: ")
+            amount = int(input("Enter amount to be deposited: "))
             k = getacc(username)
             if k != 0:
                 deposit(k, amount)
 
         elif opt == 2:
-            username = click.prompt("Enter the account name")
-            amount = click.prompt("Enter amount to be withdrawn", type=int)
+            username = input("Enter the account name: ")
+            amount = int(input("Enter amount to be withdrawn: "))
             k = getacc(username)
             if k != 0:
                 withdrawal(k, amount)
