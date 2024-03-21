@@ -1,6 +1,5 @@
 import re
 import json
-import click
 import account
 import admin
 
@@ -15,7 +14,6 @@ def valid_password(p):
         return False
 
 
-@click.command()
 def register():
     try:
         with open("usersdetails.json", "r+") as f:
@@ -57,7 +55,6 @@ def register():
         print(f"Error: {str(e)}")
 
 
-@click.command()
 def login():
     flag = 0
     flag1 = 0
@@ -109,7 +106,6 @@ def admin1(username):
         print(f"Error: {str(e)}")
 
 
-@click.command()
 def main():
     print("************************************")
     print("       WELCOME TO THE RSS BANK      ")
